@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   font-family: "Inter", sans-serif;
+  background-color: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {

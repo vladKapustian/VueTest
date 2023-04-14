@@ -12,8 +12,9 @@ interface MyNuxtConfig extends NuxtConfig {
 
 const config: MyNuxtConfig = {
   alias: {
-    "@": resolve(__dirname, "/"),
+    "@": resolve(__dirname, "./"),
   },
+  plugins: ["@/antd"],
   css: ["assets/main.css"],
   modules: ["@nuxtjs/google-fonts"],
 

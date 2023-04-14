@@ -4,6 +4,8 @@
   </NuxtLayout>
 </template>
 
+<script setup></script>
+
 <style module>
 .body {
   margin: 0 auto;

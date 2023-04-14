@@ -3,12 +3,12 @@
 <template>
   <header :class="$style.headerContainer">
     <div :class="$style.header">
-      <NuxtLink :class="$style.link" to="./">На главную</NuxtLink>
       <img src="../static/starWarsIcon.svg" :class="$style.logo" alt="Icon" />
+      <NuxtLink :class="$style.link" to="./">На главную</NuxtLink>
       <NuxtLink :class="$style.link" to="/history">История поиска</NuxtLink>
     </div>
   </header>
-  <slot :class="$style.body" />
+  <slot />
 </template>
 
 <style module>
@@ -29,9 +29,11 @@
   width: 100%;
   max-height: 60px;
   height: 100%;
+  padding: 0px 20px;
 }
 .link {
-  color: white;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #181818;
   text-decoration: none;
   font-size: 24px;
   transition: 0.3s;
@@ -44,11 +46,6 @@
 .logo {
   max-height: 48px;
   height: 100%;
-}
-
-.body {
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
+  background-color: #181818;
 }
 </style>
