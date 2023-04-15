@@ -2,11 +2,11 @@
 
 <template>
   <header :class="$style.headerContainer">
-    <div :class="$style.header">
+    <nav :class="$style.header">
       <img src="../static/starWarsIcon.svg" :class="$style.logo" alt="Icon" />
       <NuxtLink :class="$style.link" to="./">На главную</NuxtLink>
       <NuxtLink :class="$style.link" to="/history">История поиска</NuxtLink>
-    </div>
+    </nav>
   </header>
   <slot />
 </template>

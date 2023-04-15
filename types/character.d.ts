@@ -1,6 +1,6 @@
 type URI = string;
 
-export interface ICharacter {
+export interface IResults {
   count: number;
   next: null;
   previous: null;
@@ -15,7 +15,26 @@ export interface ICharacter {
     gender: string;
     homeworld: URI;
     films: URI[];
+    species: URI[];
+    vehicles: URI[];
+    starship: URI[];
+    created: string;
+    edited: string;
+    url: URI;
   }[];
+}
+
+export interface ICharacter {
+  name: string;
+  height: string;
+  mass: string;
+  hair_color: string;
+  skin_color: string;
+  eye_color: string;
+  birth_year: string;
+  gender: string;
+  homeworld: URI;
+  films: URI[];
   species: URI[];
   vehicles: URI[];
   starship: URI[];

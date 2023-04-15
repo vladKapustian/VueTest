@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { AsyncData } from "#app";
 import { Data } from "ant-design-vue/lib/_util/type";
-import { ICharacter } from "~/types/character";
+import { ICharacter, IResults } from "~/types/character";
 
 definePageMeta({
   layout: "default",
@@ -9,7 +9,7 @@ definePageMeta({
 
 let value = ref<string>("");
 
-let characters = ref<ICharacter | null>(null);
+let characters = ref<IResults | null>(null);
 const onSearch = async () => {
   characters.value = await $fetch(`https://swapi.dev/api/people?search=${value.value}`);
   console.log(characters);
@@ -29,10 +29,8 @@ const onSearch = async () => {
       @search="onSearch"
     />
     <div v-if="!characters"><p>Пока ничего не найдено</p></div>
-    <div v-else>
-      <div v-for="char in characters.results">
-        <h3>{{ char.name }}</h3>
-      </div>
+    <div :class="$style.gridContainer" v-else>
+      <CharacterCard v-for="char in characters.results" :props="char"></CharacterCard>
     </div>
   </div>
 </template>
@@ -73,5 +71,11 @@ input[type="search"] {
   border-radius: 5px;
   font-size: 16px;
   background-color: #f1f1f1;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
 }
 </style>
