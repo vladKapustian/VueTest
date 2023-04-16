@@ -32,5 +32,7 @@ defineProps<{ props: ICharacter }>();
 }
 
 .additionalInfo {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

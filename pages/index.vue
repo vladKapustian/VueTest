@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { AsyncData } from "#app";
-import { Data } from "ant-design-vue/lib/_util/type";
-import { ICharacter, IResults } from "~/types/character";
-
+import { ICharacter, IResults } from "types/character";
 definePageMeta({
   layout: "default",
 });
 
 let value = ref<string>("");
+
+// useStorage();
 
 let characters = ref<IResults | null>(null);
 const onSearch = async () => {
@@ -28,10 +27,12 @@ const onSearch = async () => {
       enter-button
       @search="onSearch"
     />
-    <div v-if="!characters"><p>Пока ничего не найдено</p></div>
-    <div :class="$style.gridContainer" v-else>
+
+    <div v-if="characters" :class="$style.gridContainer">
       <CharacterCard v-for="char in characters.results" :props="char"></CharacterCard>
     </div>
+
+    <p v-else>Пока ничего не найдено</p>
   </div>
 </template>
 
