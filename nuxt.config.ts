@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { NuxtConfig } from "nuxt/schema";
 import { resolve } from "path";
+import { useRouter } from "nuxt/app";
 
 interface MyNuxtConfig extends NuxtConfig {
   googleFonts?: {

@@ -6,33 +6,17 @@ defineProps<{ props: ICharacter }>();
 </script>
 
 <template>
-  <NuxtLink :to="`/character/${props.name}`" :class="$style.cardContainer">
-    <h3 :class="$style.name">
-      Имя: <strong>{{ props.name }}</strong>
-    </h3>
-    <div :class="$style.infoContainer">
-      <p :class="$style.additionalInfo">Год рождения: {{ props.birth_year }}</p>
-      <p :class="$style.additionalInfo">Пол: {{ props.gender }}</p>
-    </div>
+  <NuxtLink :to="`/character/${props.name}`">
+    <a-card>
+      <h3>
+        Имя: <strong>{{ props.name }}</strong>
+      </h3>
+      <div>
+        <p>Год рождения: {{ props.birth_year }}</p>
+        <p>Пол: {{ props.gender }}</p>
+      </div>
+    </a-card>
   </NuxtLink>
 </template>
 
-<style module>
-.cardContainer {
-  margin: 10px 0px;
-  border: solid 2px gray;
-  max-height: 1fr;
-}
-.name {
-  font-size: 16px;
-}
-
-.infoContainer {
-  display: flex;
-}
-
-.additionalInfo {
-  display: flex;
-  justify-content: space-between;
-}
-</style>
+<style module></style>

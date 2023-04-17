@@ -4,8 +4,8 @@
   <header :class="$style.headerContainer">
     <nav :class="$style.header">
       <img src="../static/starWarsIcon.svg" :class="$style.logo" alt="Icon" />
-      <NuxtLink :class="$style.link" to="./">На главную</NuxtLink>
-      <NuxtLink :class="$style.link" to="/history">История поиска</NuxtLink>
+      <NuxtLink :class="$style.link" to="/">На главную</NuxtLink>
+      <div></div>
     </nav>
   </header>
   <slot />

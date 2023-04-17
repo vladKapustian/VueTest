@@ -1,30 +1,50 @@
 <script setup lang="ts">
 import { ICharacter, IResults } from "types/character";
-definePageMeta({
-  layout: "default",
-});
 
-let value = ref<string>("");
+definePageMeta({ layout: "default" });
 
-// useStorage();
+const searchValue = ref("");
+const characters = ref<IResults | null>(null);
 
-let characters = ref<IResults | null>(null);
 const onSearch = async () => {
-  characters.value = await $fetch(`https://swapi.dev/api/people?search=${value.value}`);
-  console.log(characters);
+  characters.value = await $fetch(`https://swapi.dev/api/people?search=${searchValue.value}`);
 };
+
+const findVisitedCharacters = async () => {
+  if (typeof window === "undefined") return null;
+
+  const visitedCharactersArray: string[] = JSON.parse(localStorage.getItem("visitedCharacters") || "[]");
+  console.log(visitedCharactersArray);
+
+  let visitedCharacters: IResults[];
+  if (visitedCharactersArray) {
+    visitedCharacters = await Promise.all(
+      visitedCharactersArray.map(
+        async (characterName) => await $fetch(`https://swapi.dev/api/people?search=${characterName}`)
+      )
+    );
+    return visitedCharacters.map((char) => char.results[0]);
+  } else {
+    return null;
+  }
+};
+
+const visitedCharacters = await findVisitedCharacters();
 </script>
 
 <template>
   <div :class="$style.body">
     <h1 :class="$style.head">Удобное приложение для поиска персонажей и Star Wars</h1>
-    <!-- <input :class="$style.input" type="search" name="q" placeholder="" id="charachterSearch" /> -->
-    <p>value = {{ value }}</p>
+    <div v-if="visitedCharacters">
+      <h3>Вы ранее просматривали:</h3>
+      <div :class="$style.gridContainer">
+        <CharacterCard v-for="chars in visitedCharacters" :props="chars"></CharacterCard>
+      </div>
+    </div>
     <a-input-search
-      :value="value"
-      @input="(event:Event) => {(value = (event.target as HTMLInputElement).value)}"
+      :value="searchValue"
+      @input="(event:Event) => {(searchValue = (event.target as HTMLInputElement).value)}"
       placeholder="Введите имя персонажа"
-      enter-button
       @search="onSearch"
     />
 
@@ -32,33 +52,17 @@ const onSearch = async () => {
       <CharacterCard v-for="char in characters.results" :props="char"></CharacterCard>
     </div>
 
-    <p v-else>Пока ничего не найдено</p>
+    <h3 :class="$style.notFoundParagraph" v-else>Пока ничего не найдено</h3>
   </div>
 </template>
 
 <style module>
-input[type="search"]::-webkit-search-cancel-button {
-  display: none;
-}
-
-input[type="search"]::-ms-clear {
-  display: none;
-}
-
-input[type="search"] {
-  width: 100%;
-  padding: 10px;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  background-color: #f1f1f1;
-}
-
 .body {
+  flex-grow: 1;
   padding: 36px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  padding: 30px;
 }
 
 .head {
@@ -75,8 +79,13 @@ input[type="search"] {
 }
 
 .gridContainer {
+  padding: 20px 0px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
+}
+
+.notFoundParagraph {
+  padding: 10px 0px;
 }
 </style>
