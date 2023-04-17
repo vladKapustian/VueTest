@@ -1,35 +1,18 @@
 <script setup lang="ts">
 import { ICharacter, IResults } from "types/character";
+import findVisitedCharacters from "~/composables/findVisitedCharacters";
 
 definePageMeta({ layout: "default" });
 
 const searchValue = ref("");
 const characters = ref<IResults | null>(null);
+const visitedCharacters = ref<ICharacter[] | null>(null);
 
 const onSearch = async () => {
   characters.value = await $fetch(`https://swapi.dev/api/people?search=${searchValue.value}`);
 };
 
-const findVisitedCharacters = async () => {
-  if (typeof window === "undefined") return null;
-
-  const visitedCharactersArray: string[] = JSON.parse(localStorage.getItem("visitedCharacters") || "[]");
-  console.log(visitedCharactersArray);
-
-  let visitedCharacters: IResults[];
-  if (visitedCharactersArray) {
-    visitedCharacters = await Promise.all(
-      visitedCharactersArray.map(
-        async (characterName) => await $fetch(`https://swapi.dev/api/people?search=${characterName}`)
-      )
-    );
-    return visitedCharacters.map((char) => char.results[0]);
-  } else {
-    return null;
-  }
-};
-
-const visitedCharacters = await findVisitedCharacters();
+onMounted(async () => (visitedCharacters.value = await findVisitedCharacters()));
 </script>
 
 <template>

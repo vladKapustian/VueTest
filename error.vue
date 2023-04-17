@@ -14,7 +14,6 @@ const props = defineProps({
   error: Object,
 });
 
-const handleError = () => clearError({ redirect: "/" });
 </script>
 
 <style module>

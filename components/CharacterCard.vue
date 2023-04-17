@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ICharacter } from "~/types/character";
 defineProps<{ props: ICharacter }>();
-
-// const char = toRefs(props);
 </script>
 
 <template>
